@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATM Simulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+        }
+        .atm-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .atm-container:hover {
+            transform: translateY(-5px);
+        }
+        h1 {
+            color: #0072ff;
+        }
+        p {
+            font-size: 18px;
+            color: #333;
+        }
+        button {
+            display: block;
+            margin: 10px auto;
+            padding: 12px;
+            width: 160px;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            font-size: 16px;
+        }
+        button:hover {
+            background: linear-gradient(135deg, #0072ff, #00c6ff);
+            transform: scale(1.05);
+        }
+        #message {
+            color: #d9534f;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+      
+        #exitModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="atm-container">
+        <h1>ATM Simulation</h1>
+        <p>Your Balance: <span id="balance">0</span></p>
+        <button onclick="checkBalance()">Check Balance</button>
+        <button onclick="deposit()">Deposit</button>
+        <button onclick="withdraw()">Withdraw</button>
+        <button onclick="showExitModal()">Exit</button>
+        <p id="message"></p>
+    </div>
+
+
+    <div id="exitModal">
+        <div class="modal-content">
+            <h2>Are you sure you want to exit?</h2>
+            <button onclick="confirmExit()">Yes</button>
+            <button onclick="closeModal()">No</button>
+        </div>
+    </div>
+
+    <script>
+     
+        let balance = 0;
+
+        function checkBalance() {
+            document.getElementById('message').innerText = `Your balance is $${balance}`;
+        }
+
+        function deposit() {
+            const amount = prompt("Enter amount to deposit:");
+            if (amount) {
+                balance += parseFloat(amount);
+                document.getElementById('balance').innerText = balance;
+                document.getElementById('message').innerText = `Deposited $${amount}`;
+            }
+        }
+
+        function withdraw() {
+            const amount = prompt("Enter amount to withdraw:");
+            if (amount && amount <= balance) {
+                balance -= parseFloat(amount);
+                document.getElementById('balance').innerText = balance;
+                document.getElementById('message').innerText = `Withdrew $${amount}`;
+            } else {
+                document.getElementById('message').innerText = "Insufficient funds or invalid amount.";
+            }
+        }
+
+        function showExitModal() {
+            document.getElementById('exitModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('exitModal').style.display = 'none';
+        }
+
+        function confirmExit() {
+            window.location.href = 'index.html'; 
+        }
+    </script>
+</body>
+</html>
